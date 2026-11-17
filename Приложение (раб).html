@@ -1,0 +1,1645 @@
+{\rtf1\ansi\ansicpg1251\cocoartf2907
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh18000\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="ru">\
+<head>\
+    <meta charset="UTF-8">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">\
+    <meta name="apple-mobile-web-app-capable" content="yes">\
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">\
+    <meta name="apple-mobile-web-app-title" content="Flashcards">\
+    <meta name="theme-color" content="#4f46e5">\
+    <title>Flashcards \'97 English & Notes</title>\
+    \
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234f46e5'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3E\uc0\u55357 \u56538 %3C/text%3E%3C/svg%3E">\
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234f46e5'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3E\uc0\u55357 \u56538 %3C/text%3E%3C/svg%3E">\
+    \
+    <link rel="manifest" href="manifest.json">\
+    \
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>\
+    \
+    <style>\
+        :root \{\
+            --primary: #4f46e5;\
+            --primary-hover: #4338ca;\
+            --bg: #f3f4f6;\
+            --card-bg: #ffffff;\
+            --text: #1f2937;\
+            --text-light: #6b7280;\
+            --safe-top: env(safe-area-inset-top);\
+            --safe-bottom: env(safe-area-inset-bottom);\
+        \}\
+\
+        * \{\
+            box-sizing: border-box;\
+            margin: 0;\
+            padding: 0;\
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;\
+            -webkit-tap-highlight-color: transparent;\
+        \}\
+\
+        html, body \{\
+            height: 100%;\
+            overscroll-behavior: none;\
+        \}\
+\
+        body \{\
+            background-color: var(--bg);\
+            color: var(--text);\
+            display: flex;\
+            flex-direction: column;\
+            align-items: center;\
+            min-height: 100vh;\
+            padding: 20px;\
+            padding-top: calc(20px + var(--safe-top));\
+            padding-bottom: calc(20px + var(--safe-bottom));\
+        \}\
+\
+        .screen \{\
+            width: 100%;\
+            max-width: 500px;\
+            display: none;\
+        \}\
+\
+        .screen.active \{\
+            display: block;\
+        \}\
+\
+        header \{\
+            width: 100%;\
+            display: flex;\
+            justify-content: space-between;\
+            align-items: center;\
+            margin-bottom: 30px;\
+            gap: 10px;\
+        \}\
+\
+        h1 \{\
+            font-size: 1.5rem;\
+            color: var(--primary);\
+            flex: 1;\
+            text-align: center;\
+        \}\
+\
+        h2 \{\
+            font-size: 1.2rem;\
+            margin-bottom: 15px;\
+        \}\
+\
+        .btn \{\
+            background-color: var(--primary);\
+            color: white;\
+            border: none;\
+            padding: 10px 20px;\
+            border-radius: 8px;\
+            cursor: pointer;\
+            font-size: 0.9rem;\
+            font-weight: 600;\
+            transition: background 0.2s;\
+            white-space: nowrap;\
+        \}\
+\
+        .btn:hover \{\
+            background-color: var(--primary-hover);\
+        \}\
+\
+        .btn:disabled \{\
+            background-color: #9ca3af;\
+            cursor: not-allowed;\
+        \}\
+\
+        .btn-secondary \{\
+            background-color: #e5e7eb;\
+            color: var(--text);\
+        \}\
+\
+        .btn-secondary:hover \{\
+            background-color: #d1d5db;\
+        \}\
+\
+        .btn-danger \{\
+            background-color: #ef4444;\
+        \}\
+\
+        .btn-danger:hover \{\
+            background-color: #dc2626;\
+        \}\
+\
+        .btn-small \{\
+            padding: 6px 12px;\
+            font-size: 0.8rem;\
+        \}\
+\
+        .folders-list \{\
+            display: flex;\
+            flex-direction: column;\
+            gap: 12px;\
+        \}\
+\
+        .folder-item \{\
+            background: var(--card-bg);\
+            padding: 20px;\
+            border-radius: 12px;\
+            border: 1px solid #e5e7eb;\
+            cursor: pointer;\
+            transition: all 0.2s;\
+            display: flex;\
+            justify-content: space-between;\
+            align-items: center;\
+        \}\
+\
+        .folder-item:hover \{\
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\
+            transform: translateY(-2px);\
+        \}\
+\
+        .folder-info \{\
+            flex: 1;\
+            display: flex;\
+            align-items: center;\
+            gap: 12px;\
+        \}\
+\
+        .folder-icon \{\
+            font-size: 1.8rem;\
+            flex-shrink: 0;\
+        \}\
+\
+        .folder-text \{\
+            flex: 1;\
+        \}\
+\
+        .folder-name \{\
+            font-size: 1.1rem;\
+            font-weight: 600;\
+            margin-bottom: 4px;\
+        \}\
+\
+        .folder-count \{\
+            font-size: 0.85rem;\
+            color: var(--text-light);\
+        \}\
+\
+        .folder-type-badge \{\
+            display: inline-block;\
+            font-size: 0.7rem;\
+            padding: 2px 8px;\
+            border-radius: 10px;\
+            background: #e0e7ff;\
+            color: var(--primary);\
+            font-weight: 600;\
+            margin-left: 8px;\
+            text-transform: uppercase;\
+        \}\
+\
+        .folder-type-badge.notes \{\
+            background: #dcfce7;\
+            color: #166534;\
+        \}\
+\
+        .folder-actions \{\
+            display: flex;\
+            gap: 8px;\
+        \}\
+\
+        .empty-state \{\
+            text-align: center;\
+            color: var(--text-light);\
+            padding: 60px 20px;\
+        \}\
+\
+        .empty-state-icon \{\
+            font-size: 3rem;\
+            margin-bottom: 15px;\
+        \}\
+\
+        .card-container \{\
+            width: 100%;\
+            max-width: 500px;\
+            height: 300px;\
+            perspective: 1000px;\
+            cursor: pointer;\
+            margin-bottom: 30px;\
+        \}\
+\
+        .card-inner \{\
+            position: relative;\
+            width: 100%;\
+            height: 100%;\
+            text-align: center;\
+            transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);\
+            transform-style: preserve-3d;\
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);\
+            border-radius: 16px;\
+        \}\
+\
+        .card-container.is-flipped .card-inner \{\
+            transform: rotateY(180deg);\
+        \}\
+\
+        .card-face \{\
+            position: absolute;\
+            width: 100%;\
+            height: 100%;\
+            backface-visibility: hidden;\
+            display: flex;\
+            flex-direction: column;\
+            justify-content: center;\
+            align-items: center;\
+            padding: 30px;\
+            background-color: var(--card-bg);\
+            border-radius: 16px;\
+            border: 1px solid #e5e7eb;\
+            overflow-y: auto;\
+        \}\
+\
+        .card-face.back \{\
+            transform: rotateY(180deg);\
+            background-color: #fafafa;\
+        \}\
+\
+        .word \{\
+            font-size: 2rem;\
+            font-weight: 700;\
+            margin-bottom: 15px;\
+            color: var(--primary);\
+        \}\
+\
+        .sentence \{\
+            font-size: 1.1rem;\
+            color: var(--text-light);\
+            font-style: italic;\
+            line-height: 1.5;\
+        \}\
+\
+        .hint \{\
+            position: absolute;\
+            bottom: 15px;\
+            font-size: 0.8rem;\
+            color: #9ca3af;\
+        \}\
+\
+        .controls \{\
+            display: flex;\
+            gap: 15px;\
+            justify-content: center;\
+            align-items: center;\
+            width: 100%;\
+            max-width: 500px;\
+        \}\
+\
+        .counter \{\
+            font-size: 0.9rem;\
+            color: var(--text-light);\
+            min-width: 60px;\
+            text-align: center;\
+        \}\
+\
+        .scanner-section \{\
+            background: var(--card-bg);\
+            padding: 20px;\
+            border-radius: 12px;\
+            border: 1px solid #e5e7eb;\
+            margin-bottom: 15px;\
+        \}\
+\
+        .photo-preview-container \{\
+            position: relative;\
+            width: 100%;\
+            margin: 15px 0;\
+            border-radius: 12px;\
+            overflow: hidden;\
+            background: #000;\
+            display: none;\
+        \}\
+\
+        .photo-preview-container img \{\
+            width: 100%;\
+            display: block;\
+        \}\
+\
+        .photo-preview-container canvas \{\
+            position: absolute;\
+            top: 0;\
+            left: 0;\
+            width: 100%;\
+            height: 100%;\
+            pointer-events: none;\
+        \}\
+\
+        .color-picker-row \{\
+            display: flex;\
+            align-items: center;\
+            gap: 10px;\
+            margin-bottom: 10px;\
+        \}\
+\
+        .color-picker-row label \{\
+            flex: 1;\
+            font-size: 0.9rem;\
+            font-weight: 600;\
+            color: var(--text-light);\
+        \}\
+\
+        .color-picker-row input[type="color"] \{\
+            width: 50px;\
+            height: 40px;\
+            border: 1px solid #d1d5db;\
+            border-radius: 8px;\
+            cursor: pointer;\
+            padding: 2px;\
+        \}\
+\
+        .file-input-wrapper \{\
+            position: relative;\
+            display: inline-block;\
+            width: 100%;\
+        \}\
+\
+        .file-input-wrapper input[type="file"] \{\
+            position: absolute;\
+            opacity: 0;\
+            width: 100%;\
+            height: 100%;\
+            cursor: pointer;\
+        \}\
+\
+        .file-input-label \{\
+            display: block;\
+            padding: 15px;\
+            background: #e5e7eb;\
+            border-radius: 8px;\
+            text-align: center;\
+            font-weight: 600;\
+            color: var(--text);\
+            cursor: pointer;\
+            transition: background 0.2s;\
+        \}\
+\
+        .file-input-label:hover \{\
+            background: #d1d5db;\
+        \}\
+\
+        .progress-container \{\
+            display: none;\
+            margin: 20px 0;\
+        \}\
+\
+        .progress-bar \{\
+            width: 100%;\
+            height: 8px;\
+            background: #e5e7eb;\
+            border-radius: 4px;\
+            overflow: hidden;\
+            margin-bottom: 8px;\
+        \}\
+\
+        .progress-fill \{\
+            height: 100%;\
+            background: var(--primary);\
+            width: 0%;\
+            transition: width 0.3s;\
+        \}\
+\
+        .progress-text \{\
+            font-size: 0.85rem;\
+            color: var(--text-light);\
+            text-align: center;\
+        \}\
+\
+        .pairs-list \{\
+            display: flex;\
+            flex-direction: column;\
+            gap: 10px;\
+            margin: 15px 0;\
+        \}\
+\
+        .pair-item \{\
+            background: var(--card-bg);\
+            padding: 15px;\
+            border-radius: 10px;\
+            border: 1px solid #e5e7eb;\
+        \}\
+\
+        .pair-item input \{\
+            width: 100%;\
+            padding: 8px;\
+            border: 1px solid #d1d5db;\
+            border-radius: 6px;\
+            font-size: 0.95rem;\
+            margin-bottom: 8px;\
+            outline: none;\
+        \}\
+\
+        .pair-item input:focus \{\
+            border-color: var(--primary);\
+        \}\
+\
+        .pair-label \{\
+            font-size: 0.75rem;\
+            color: var(--text-light);\
+            text-transform: uppercase;\
+            font-weight: 600;\
+            margin-bottom: 4px;\
+        \}\
+\
+        .pair-actions \{\
+            display: flex;\
+            justify-content: flex-end;\
+            margin-top: 8px;\
+        \}\
+\
+        .scanner-hint \{\
+            background: #fef3c7;\
+            border: 1px solid #fcd34d;\
+            color: #92400e;\
+            padding: 12px;\
+            border-radius: 8px;\
+            font-size: 0.85rem;\
+            margin-bottom: 15px;\
+            line-height: 1.5;\
+        \}\
+\
+        .modal-overlay \{\
+            display: none;\
+            position: fixed;\
+            top: 0;\
+            left: 0;\
+            width: 100%;\
+            height: 100%;\
+            background-color: rgba(0, 0, 0, 0.5);\
+            justify-content: center;\
+            align-items: center;\
+            z-index: 100;\
+            padding: 20px;\
+        \}\
+\
+        .modal-overlay.active \{\
+            display: flex;\
+        \}\
+\
+        .modal \{\
+            background: white;\
+            padding: 30px;\
+            border-radius: 16px;\
+            width: 100%;\
+            max-width: 450px;\
+            max-height: 90vh;\
+            overflow-y: auto;\
+        \}\
+\
+        .modal h2 \{\
+            margin-bottom: 20px;\
+            font-size: 1.3rem;\
+        \}\
+\
+        .form-group \{\
+            margin-bottom: 15px;\
+        \}\
+\
+        .form-group label \{\
+            display: block;\
+            margin-bottom: 5px;\
+            font-size: 0.9rem;\
+            font-weight: 600;\
+            color: var(--text-light);\
+        \}\
+\
+        .form-group input,\
+        .form-group textarea,\
+        .form-group select \{\
+            width: 100%;\
+            padding: 10px;\
+            border: 1px solid #d1d5db;\
+            border-radius: 8px;\
+            font-size: 1rem;\
+            outline: none;\
+            transition: border-color 0.2s;\
+            background: white;\
+        \}\
+\
+        .form-group input:focus,\
+        .form-group textarea:focus,\
+        .form-group select:focus \{\
+            border-color: var(--primary);\
+        \}\
+\
+        .modal-actions \{\
+            display: flex;\
+            justify-content: flex-end;\
+            gap: 10px;\
+            margin-top: 20px;\
+        \}\
+\
+        .range-row \{\
+            display: flex;\
+            align-items: center;\
+            gap: 10px;\
+        \}\
+\
+        .range-row input[type="range"] \{\
+            flex: 1;\
+        \}\
+\
+        .range-value \{\
+            min-width: 40px;\
+            text-align: right;\
+            font-weight: 600;\
+            color: var(--primary);\
+        \}\
+\
+        .type-selector \{\
+            display: flex;\
+            gap: 10px;\
+            margin-bottom: 15px;\
+        \}\
+\
+        .type-option \{\
+            flex: 1;\
+            padding: 15px;\
+            border: 2px solid #e5e7eb;\
+            border-radius: 10px;\
+            cursor: pointer;\
+            text-align: center;\
+            transition: all 0.2s;\
+            background: white;\
+        \}\
+\
+        .type-option:hover \{\
+            border-color: var(--primary);\
+        \}\
+\
+        .type-option.selected \{\
+            border-color: var(--primary);\
+            background: #eef2ff;\
+        \}\
+\
+        .type-option-icon \{\
+            font-size: 2rem;\
+            margin-bottom: 5px;\
+        \}\
+\
+        .type-option-label \{\
+            font-weight: 600;\
+            font-size: 0.9rem;\
+        \}\
+\
+        .type-option-desc \{\
+            font-size: 0.75rem;\
+            color: var(--text-light);\
+            margin-top: 3px;\
+        \}\
+    </style>\
+</head>\
+<body>\
+\
+    <!-- Folders Screen -->\
+    <div class="screen active" id="foldersScreen">\
+        <header>\
+            <h1>\uc0\u1052 \u1086 \u1080  \u1087 \u1072 \u1087 \u1082 \u1080 </h1>\
+            <button class="btn btn-secondary btn-small" onclick="openScanner()">\uc0\u55357 \u56567 </button>\
+            <button class="btn" onclick="openFolderModal()">+ \uc0\u1055 \u1072 \u1087 \u1082 \u1072 </button>\
+        </header>\
+\
+        <div class="folders-list" id="foldersList"></div>\
+    </div>\
+\
+    <!-- Cards Screen -->\
+    <div class="screen" id="cardsScreen">\
+        <header>\
+            <button class="btn btn-secondary" onclick="backToFolders()">\uc0\u8592  \u1053 \u1072 \u1079 \u1072 \u1076 </button>\
+            <h1 id="currentFolderName">\uc0\u1055 \u1072 \u1087 \u1082 \u1072 </h1>\
+            <button class="btn" onclick="openCardModal()">+ \uc0\u1050 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1072 </button>\
+        </header>\
+\
+        <div class="card-container" id="cardContainer" onclick="flipCard()">\
+            <div class="card-inner" id="cardInner">\
+                <div class="card-face front" id="cardFront"></div>\
+                <div class="card-face back" id="cardBack"></div>\
+            </div>\
+        </div>\
+\
+        <div class="controls">\
+            <button class="btn btn-secondary" onclick="prevCard()">\uc0\u8592  \u1053 \u1072 \u1079 \u1072 \u1076 </button>\
+            <span class="counter" id="counter">0 / 0</span>\
+            <button class="btn btn-secondary" onclick="nextCard()">\uc0\u1042 \u1087 \u1077 \u1088 \u1077 \u1076  \u8594 </button>\
+        </div>\
+\
+        <div style="margin-top: 15px; text-align: center;">\
+            <button class="btn btn-danger btn-small" onclick="deleteCurrentCard()">\uc0\u1059 \u1076 \u1072 \u1083 \u1080 \u1090 \u1100  \u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1091 </button>\
+        </div>\
+    </div>\
+\
+    <!-- Scanner Screen -->\
+    <div class="screen" id="scannerScreen">\
+        <header>\
+            <button class="btn btn-secondary" onclick="backToFoldersFromScanner()">\uc0\u8592  \u1053 \u1072 \u1079 \u1072 \u1076 </button>\
+            <h1>\uc0\u1057 \u1082 \u1072 \u1085 \u1077 \u1088  \u1082 \u1086 \u1085 \u1089 \u1087 \u1077 \u1082 \u1090 \u1072 </h1>\
+            <div style="width: 60px;"></div>\
+        </header>\
+\
+        <div class="scanner-hint">\
+            \uc0\u55357 \u56481  <b>\u1057 \u1086 \u1074 \u1077 \u1090 :</b> \u1042 \u1099 \u1076 \u1077 \u1083 \u1080 \u1090 \u1077  \u1090 \u1077 \u1088 \u1084 \u1080 \u1085 \u1099  <b>\u1086 \u1076 \u1085 \u1080 \u1084  \u1094 \u1074 \u1077 \u1090 \u1086 \u1084 </b> (\u1085 \u1072 \u1087 \u1088 \u1080 \u1084 \u1077 \u1088 , \u1078 \u1105 \u1083 \u1090 \u1099 \u1084 ), \u1072  \u1080 \u1093  \u1086 \u1087 \u1088 \u1077 \u1076 \u1077 \u1083 \u1077 \u1085 \u1080 \u1103  \'97 <b>\u1076 \u1088 \u1091 \u1075 \u1080 \u1084 </b> (\u1085 \u1072 \u1087 \u1088 \u1080 \u1084 \u1077 \u1088 , \u1088 \u1086 \u1079 \u1086 \u1074 \u1099 \u1084 ). \u1060 \u1086 \u1090 \u1086  \u1076 \u1086 \u1083 \u1078 \u1085 \u1086  \u1073 \u1099 \u1090 \u1100  \u1095 \u1105 \u1090 \u1082 \u1080 \u1084 , \u1073 \u1077 \u1079  \u1073 \u1083 \u1080 \u1082 \u1086 \u1074 .\
+        </div>\
+\
+        <div class="scanner-section">\
+            <div class="form-group">\
+                <label>\uc0\u1055 \u1072 \u1087 \u1082 \u1072  \u1076 \u1083 \u1103  \u1089 \u1086 \u1093 \u1088 \u1072 \u1085 \u1077 \u1085 \u1080 \u1103 </label>\
+                <select id="targetFolder"></select>\
+            </div>\
+\
+            <div class="form-group">\
+                <label>\uc0\u1060 \u1086 \u1090 \u1086  \u1082 \u1086 \u1085 \u1089 \u1087 \u1077 \u1082 \u1090 \u1072 </label>\
+                <div class="file-input-wrapper">\
+                    <div class="file-input-label" id="fileInputLabel">\uc0\u55357 \u56567  \u1042 \u1099 \u1073 \u1088 \u1072 \u1090 \u1100  \u1092 \u1086 \u1090 \u1086  \u1080 \u1083 \u1080  \u1089 \u1076 \u1077 \u1083 \u1072 \u1090 \u1100  \u1089 \u1085 \u1080 \u1084 \u1086 \u1082 </div>\
+                    <input type="file" accept="image/*" capture="environment" id="photoInput" onchange="handlePhotoSelect(event)">\
+                </div>\
+            </div>\
+\
+            <div class="photo-preview-container" id="photoPreviewContainer">\
+                <img id="photoPreview" alt="preview">\
+                <canvas id="overlayCanvas"></canvas>\
+            </div>\
+\
+            <div class="color-picker-row">\
+                <label>\uc0\u55357 \u57313  \u1062 \u1074 \u1077 \u1090  \u1090 \u1077 \u1088 \u1084 \u1080 \u1085 \u1072  (\u1083 \u1080 \u1094 \u1086  \u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1080 )</label>\
+                <input type="color" id="termColor" value="#ffff00">\
+            </div>\
+\
+            <div class="color-picker-row">\
+                <label>\uc0\u55357 \u56628  \u1062 \u1074 \u1077 \u1090  \u1086 \u1087 \u1088 \u1077 \u1076 \u1077 \u1083 \u1077 \u1085 \u1080 \u1103  (\u1086 \u1073 \u1086 \u1088 \u1086 \u1090  \u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1080 )</label>\
+                <input type="color" id="defColor" value="#ff69b4">\
+            </div>\
+\
+            <div class="form-group">\
+                <label>\uc0\u1063 \u1091 \u1074 \u1089 \u1090 \u1074 \u1080 \u1090 \u1077 \u1083 \u1100 \u1085 \u1086 \u1089 \u1090 \u1100  \u1082  \u1094 \u1074 \u1077 \u1090 \u1091 </label>\
+                <div class="range-row">\
+                    <input type="range" id="tolerance" min="10" max="60" value="30" oninput="document.getElementById('toleranceValue').textContent = this.value">\
+                    <span class="range-value" id="toleranceValue">30</span>\
+                </div>\
+            </div>\
+\
+            <button class="btn" id="scanBtn" onclick="startScan()" style="width: 100%;" disabled>\uc0\u55357 \u56589  \u1057 \u1082 \u1072 \u1085 \u1080 \u1088 \u1086 \u1074 \u1072 \u1090 \u1100 </button>\
+\
+            <div class="progress-container" id="progressContainer">\
+                <div class="progress-bar">\
+                    <div class="progress-fill" id="progressFill"></div>\
+                </div>\
+                <div class="progress-text" id="progressText">\uc0\u1048 \u1085 \u1080 \u1094 \u1080 \u1072 \u1083 \u1080 \u1079 \u1072 \u1094 \u1080 \u1103 ...</div>\
+            </div>\
+        </div>\
+\
+        <div id="resultsSection" style="display: none;">\
+            <h2>\uc0\u1053 \u1072 \u1081 \u1076 \u1077 \u1085 \u1085 \u1099 \u1077  \u1087 \u1072 \u1088 \u1099  (<span id="pairsCount">0</span>)</h2>\
+            <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 10px;">\
+                \uc0\u1054 \u1090 \u1088 \u1077 \u1076 \u1072 \u1082 \u1090 \u1080 \u1088 \u1091 \u1081 \u1090 \u1077  \u1087 \u1088 \u1080  \u1085 \u1077 \u1086 \u1073 \u1093 \u1086 \u1076 \u1080 \u1084 \u1086 \u1089 \u1090 \u1080  \u1080  \u1085 \u1072 \u1078 \u1084 \u1080 \u1090 \u1077  "\u1057 \u1086 \u1093 \u1088 \u1072 \u1085 \u1080 \u1090 \u1100 ".\
+            </p>\
+            <div class="pairs-list" id="pairsList"></div>\
+            <div style="display: flex; gap: 10px; margin-top: 15px;">\
+                <button class="btn btn-secondary" onclick="addEmptyPair()" style="flex: 1;">+ \uc0\u1044 \u1086 \u1073 \u1072 \u1074 \u1080 \u1090 \u1100  \u1087 \u1072 \u1088 \u1091 </button>\
+                <button class="btn" onclick="saveScannedPairs()" style="flex: 1;">\uc0\u55357 \u56510  \u1057 \u1086 \u1093 \u1088 \u1072 \u1085 \u1080 \u1090 \u1100 </button>\
+            </div>\
+        </div>\
+    </div>\
+\
+    <!-- Folder Modal -->\
+    <div class="modal-overlay" id="folderModalOverlay">\
+        <div class="modal">\
+            <h2 id="folderModalTitle">\uc0\u1053 \u1086 \u1074 \u1072 \u1103  \u1087 \u1072 \u1087 \u1082 \u1072 </h2>\
+            <form id="folderForm" onsubmit="saveFolder(event)">\
+                <div class="form-group">\
+                    <label>\uc0\u1058 \u1080 \u1087  \u1087 \u1072 \u1087 \u1082 \u1080 </label>\
+                    <div class="type-selector">\
+                        <div class="type-option selected" data-type="english" onclick="selectFolderType('english')">\
+                            <div class="type-option-icon">\uc0\u55356 \u56812 \u55356 \u56807 </div>\
+                            <div class="type-option-label">\uc0\u1040 \u1085 \u1075 \u1083 \u1080 \u1081 \u1089 \u1082 \u1080 \u1081 </div>\
+                            <div class="type-option-desc">\uc0\u1057 \u1083 \u1086 \u1074 \u1086  + \u1087 \u1088 \u1077 \u1076 \u1083 \u1086 \u1078 \u1077 \u1085 \u1080 \u1077 </div>\
+                        </div>\
+                        <div class="type-option" data-type="notes" onclick="selectFolderType('notes')">\
+                            <div class="type-option-icon">\uc0\u55357 \u56541 </div>\
+                            <div class="type-option-label">\uc0\u1050 \u1086 \u1085 \u1089 \u1087 \u1077 \u1082 \u1090 \u1099 </div>\
+                            <div class="type-option-desc">\uc0\u1058 \u1077 \u1088 \u1084 \u1080 \u1085  + \u1086 \u1087 \u1088 \u1077 \u1076 \u1077 \u1083 \u1077 \u1085 \u1080 \u1077 </div>\
+                        </div>\
+                    </div>\
+                </div>\
+                <div class="form-group">\
+                    <label>\uc0\u1053 \u1072 \u1079 \u1074 \u1072 \u1085 \u1080 \u1077  \u1087 \u1072 \u1087 \u1082 \u1080 </label>\
+                    <input type="text" id="folderName" required placeholder="\uc0\u1053 \u1072 \u1087 \u1088 \u1080 \u1084 \u1077 \u1088 : \u1040 \u1085 \u1072 \u1090 \u1086 \u1084 \u1080 \u1103 , Food, Travel">\
+                </div>\
+                <div class="modal-actions">\
+                    <button type="button" class="btn btn-secondary" onclick="closeFolderModal()">\uc0\u1054 \u1090 \u1084 \u1077 \u1085 \u1072 </button>\
+                    <button type="submit" class="btn">\uc0\u1057 \u1086 \u1093 \u1088 \u1072 \u1085 \u1080 \u1090 \u1100 </button>\
+                </div>\
+            </form>\
+        </div>\
+    </div>\
+\
+    <!-- Card Modal -->\
+    <div class="modal-overlay" id="cardModalOverlay">\
+        <div class="modal">\
+            <h2 id="cardModalTitle">\uc0\u1053 \u1086 \u1074 \u1072 \u1103  \u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1072 </h2>\
+            <form id="cardForm" onsubmit="saveCard(event)">\
+                <div id="englishFields">\
+                    <div class="form-group">\
+                        <label>\uc0\u1057 \u1083 \u1086 \u1074 \u1086  \u1085 \u1072  \u1072 \u1085 \u1075 \u1083 \u1080 \u1081 \u1089 \u1082 \u1086 \u1084 </label>\
+                        <input type="text" id="newEnWord">\
+                    </div>\
+                    <div class="form-group">\
+                        <label>\uc0\u1055 \u1088 \u1080 \u1084 \u1077 \u1088  \u1087 \u1088 \u1077 \u1076 \u1083 \u1086 \u1078 \u1077 \u1085 \u1080 \u1103  (EN)</label>\
+                        <textarea id="newEnSentence" rows="2"></textarea>\
+                    </div>\
+                    <div class="form-group">\
+                        <label>\uc0\u1055 \u1077 \u1088 \u1077 \u1074 \u1086 \u1076  \u1089 \u1083 \u1086 \u1074 \u1072 </label>\
+                        <input type="text" id="newRuWord">\
+                    </div>\
+                    <div class="form-group">\
+                        <label>\uc0\u1055 \u1077 \u1088 \u1077 \u1074 \u1086 \u1076  \u1087 \u1088 \u1077 \u1076 \u1083 \u1086 \u1078 \u1077 \u1085 \u1080 \u1103 </label>\
+                        <textarea id="newRuSentence" rows="2"></textarea>\
+                    </div>\
+                </div>\
+                <div id="notesFields" style="display: none;">\
+                    <div class="form-group">\
+                        <label>\uc0\u1058 \u1077 \u1088 \u1084 \u1080 \u1085  (\u1083 \u1080 \u1094 \u1077 \u1074 \u1072 \u1103  \u1089 \u1090 \u1086 \u1088 \u1086 \u1085 \u1072 )</label>\
+                        <input type="text" id="newTerm">\
+                    </div>\
+                    <div class="form-group">\
+                        <label>\uc0\u1054 \u1087 \u1088 \u1077 \u1076 \u1077 \u1083 \u1077 \u1085 \u1080 \u1077  (\u1086 \u1073 \u1086 \u1088 \u1086 \u1090 \u1085 \u1072 \u1103  \u1089 \u1090 \u1086 \u1088 \u1086 \u1085 \u1072 )</label>\
+                        <textarea id="newDefinition" rows="3"></textarea>\
+                    </div>\
+                </div>\
+                <div class="modal-actions">\
+                    <button type="button" class="btn btn-secondary" onclick="closeCardModal()">\uc0\u1054 \u1090 \u1084 \u1077 \u1085 \u1072 </button>\
+                    <button type="submit" class="btn">\uc0\u1057 \u1086 \u1093 \u1088 \u1072 \u1085 \u1080 \u1090 \u1100 </button>\
+                </div>\
+            </form>\
+        </div>\
+    </div>\
+\
+    <script>\
+        // ============ DATA ============\
+        let data = \{ folders: [] \};\
+        let currentFolderId = null;\
+        let currentCardIndex = 0;\
+        let editingFolderId = null;\
+        let newFolderType = 'english';\
+\
+        let scannedImage = null;\
+        let scannedPairs = [];\
+\
+        function init() \{\
+            const saved = localStorage.getItem('flashcardsData');\
+            if (saved) \{\
+                data = JSON.parse(saved);\
+                let migrated = false;\
+                data.folders.forEach(f => \{\
+                    if (!f.type) \{\
+                        f.type = 'english';\
+                        migrated = true;\
+                    \}\
+                \});\
+                if (migrated) saveData();\
+            \} else \{\
+                data.folders = [\
+                    \{\
+                        id: 1,\
+                        name: "English Basics",\
+                        type: "english",\
+                        cards: [\
+                            \{\
+                                id: 1,\
+                                enWord: "Serendipity",\
+                                enSentence: "Finding this cafe was pure serendipity.",\
+                                ruWord: "\uc0\u1057 \u1095 \u1072 \u1089 \u1090 \u1083 \u1080 \u1074 \u1072 \u1103  \u1089 \u1083 \u1091 \u1095 \u1072 \u1081 \u1085 \u1086 \u1089 \u1090 \u1100 ",\
+                                ruSentence: "\uc0\u1053 \u1072 \u1081 \u1090 \u1080  \u1101 \u1090 \u1086  \u1082 \u1072 \u1092 \u1077  \u1073 \u1099 \u1083 \u1086  \u1095 \u1080 \u1089 \u1090 \u1086 \u1081  \u1091 \u1076 \u1072 \u1095 \u1077 \u1081 ."\
+                            \},\
+                            \{\
+                                id: 2,\
+                                enWord: "Resilient",\
+                                enSentence: "She is resilient to failures.",\
+                                ruWord: "\uc0\u1046 \u1080 \u1079 \u1085 \u1077 \u1089 \u1090 \u1086 \u1081 \u1082 \u1080 \u1081 ",\
+                                ruSentence: "\uc0\u1054 \u1085 \u1072  \u1091 \u1089 \u1090 \u1086 \u1081 \u1095 \u1080 \u1074 \u1072  \u1082  \u1085 \u1077 \u1091 \u1076 \u1072 \u1095 \u1072 \u1084 ."\
+                            \}\
+                        ]\
+                    \},\
+                    \{\
+                        id: 2,\
+                        name: "\uc0\u1040 \u1085 \u1072 \u1090 \u1086 \u1084 \u1080 \u1103  \u1089 \u1077 \u1088 \u1076 \u1094 \u1072 ",\
+                        type: "notes",\
+                        cards: [\
+                            \{\
+                                id: 3,\
+                                term: "\uc0\u1052 \u1080 \u1086 \u1082 \u1072 \u1088 \u1076 ",\
+                                definition: "\uc0\u1057 \u1088 \u1077 \u1076 \u1085 \u1103 \u1103  \u1084 \u1099 \u1096 \u1077 \u1095 \u1085 \u1072 \u1103  \u1086 \u1073 \u1086 \u1083 \u1086 \u1095 \u1082 \u1072  \u1089 \u1077 \u1088 \u1076 \u1094 \u1072 , \u1089 \u1086 \u1089 \u1090 \u1086 \u1103 \u1097 \u1072 \u1103  \u1080 \u1079  \u1082 \u1072 \u1088 \u1076 \u1080 \u1086 \u1084 \u1080 \u1086 \u1094 \u1080 \u1090 \u1086 \u1074 ."\
+                            \}\
+                        ]\
+                    \}\
+                ];\
+                saveData();\
+            \}\
+            renderFolders();\
+            setupEventDelegation();\
+        \}\
+\
+        // ============ EVENT DELEGATION ============\
+        function setupEventDelegation() \{\
+            // \uc0\u1044 \u1077 \u1083 \u1077 \u1075 \u1080 \u1088 \u1086 \u1074 \u1072 \u1085 \u1080 \u1077  \u1076 \u1083 \u1103  \u1089 \u1087 \u1080 \u1089 \u1082 \u1072  \u1087 \u1072 \u1087 \u1086 \u1082 \
+            document.getElementById('foldersList').addEventListener('click', function(e) \{\
+                const folderItem = e.target.closest('.folder-item');\
+                if (!folderItem) return;\
+\
+                const folderId = parseInt(folderItem.dataset.folderId);\
+\
+                // \uc0\u1050 \u1083 \u1080 \u1082  \u1085 \u1072  \u1082 \u1085 \u1086 \u1087 \u1082 \u1091  \u1091 \u1076 \u1072 \u1083 \u1077 \u1085 \u1080 \u1103 \
+                if (e.target.closest('.btn-delete-folder')) \{\
+                    e.preventDefault();\
+                    e.stopPropagation();\
+                    deleteFolder(folderId);\
+                    return;\
+                \}\
+\
+                // \uc0\u1050 \u1083 \u1080 \u1082  \u1085 \u1072  \u1082 \u1085 \u1086 \u1087 \u1082 \u1091  \u1088 \u1077 \u1076 \u1072 \u1082 \u1090 \u1080 \u1088 \u1086 \u1074 \u1072 \u1085 \u1080 \u1103 \
+                if (e.target.closest('.btn-edit-folder')) \{\
+                    e.preventDefault();\
+                    e.stopPropagation();\
+                    editFolder(folderId);\
+                    return;\
+                \}\
+\
+                // \uc0\u1050 \u1083 \u1080 \u1082  \u1085 \u1072  \u1089 \u1072 \u1084 \u1091  \u1087 \u1072 \u1087 \u1082 \u1091 \
+                openFolder(folderId);\
+            \});\
+\
+            // \uc0\u1044 \u1077 \u1083 \u1077 \u1075 \u1080 \u1088 \u1086 \u1074 \u1072 \u1085 \u1080 \u1077  \u1076 \u1083 \u1103  \u1089 \u1087 \u1080 \u1089 \u1082 \u1072  \u1087 \u1072 \u1088  (\u1089 \u1082 \u1072 \u1085 \u1077 \u1088 )\
+            document.getElementById('pairsList').addEventListener('click', function(e) \{\
+                const btn = e.target.closest('.btn-delete-pair');\
+                if (!btn) return;\
+                const pairItem = e.target.closest('.pair-item');\
+                const idx = parseInt(pairItem.dataset.pairIdx);\
+                removePair(idx);\
+            \});\
+        \}\
+\
+        function saveData() \{\
+            localStorage.setItem('flashcardsData', JSON.stringify(data));\
+        \}\
+\
+        // ============ FOLDERS ============\
+        function renderFolders() \{\
+            const list = document.getElementById('foldersList');\
+            \
+            if (data.folders.length === 0) \{\
+                list.innerHTML = `\
+                    <div class="empty-state">\
+                        <div class="empty-state-icon">\uc0\u55357 \u56513 </div>\
+                        <p>\uc0\u1059  \u1074 \u1072 \u1089  \u1087 \u1086 \u1082 \u1072  \u1085 \u1077 \u1090  \u1087 \u1072 \u1087 \u1086 \u1082 </p>\
+                        <p style="margin-top: 10px; font-size: 0.9rem;">\uc0\u1053 \u1072 \u1078 \u1084 \u1080 \u1090 \u1077  "+ \u1055 \u1072 \u1087 \u1082 \u1072 " \u1080 \u1083 \u1080  "\u55357 \u56567 "</p>\
+                    </div>\
+                `;\
+                return;\
+            \}\
+\
+            list.innerHTML = data.folders.map(folder => \{\
+                const icon = folder.type === 'notes' ? '\uc0\u55357 \u56541 ' : '\u55356 \u56812 \u55356 \u56807 ';\
+                const badge = folder.type === 'notes' \
+                    ? '<span class="folder-type-badge notes">\uc0\u1082 \u1086 \u1085 \u1089 \u1087 \u1077 \u1082 \u1090 </span>'\
+                    : '<span class="folder-type-badge">english</span>';\
+                return `\
+                    <div class="folder-item" data-folder-id="$\{folder.id\}">\
+                        <div class="folder-info">\
+                            <div class="folder-icon">$\{icon\}</div>\
+                            <div class="folder-text">\
+                                <div class="folder-name">$\{folder.name\}$\{badge\}</div>\
+                                <div class="folder-count">$\{folder.cards.length\} $\{getCardWord(folder.cards.length)\}</div>\
+                            </div>\
+                        </div>\
+                        <div class="folder-actions">\
+                            <button class="btn btn-secondary btn-small btn-edit-folder" type="button">\uc0\u9999 \u65039 </button>\
+                            <button class="btn btn-danger btn-small btn-delete-folder" type="button">\uc0\u55357 \u56785 \u65039 </button>\
+                        </div>\
+                    </div>\
+                `;\
+            \}).join('');\
+        \}\
+\
+        function getCardWord(count) \{\
+            if (count % 10 === 1 && count % 100 !== 11) return '\uc0\u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1072 ';\
+            if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) return '\uc0\u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1080 ';\
+            return '\uc0\u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1077 \u1082 ';\
+        \}\
+\
+        function openFolder(folderId) \{\
+            currentFolderId = folderId;\
+            currentCardIndex = 0;\
+            const folder = data.folders.find(f => f.id === folderId);\
+            document.getElementById('currentFolderName').textContent = folder.name;\
+            document.getElementById('foldersScreen').classList.remove('active');\
+            document.getElementById('cardsScreen').classList.add('active');\
+            renderCard();\
+        \}\
+\
+        function backToFolders() \{\
+            currentFolderId = null;\
+            document.getElementById('cardsScreen').classList.remove('active');\
+            document.getElementById('foldersScreen').classList.add('active');\
+            renderFolders();\
+        \}\
+\
+        function backToFoldersFromScanner() \{\
+            document.getElementById('scannerScreen').classList.remove('active');\
+            document.getElementById('foldersScreen').classList.add('active');\
+            renderFolders();\
+        \}\
+\
+        function selectFolderType(type) \{\
+            newFolderType = type;\
+            document.querySelectorAll('.type-option').forEach(el => \{\
+                el.classList.toggle('selected', el.dataset.type === type);\
+            \});\
+        \}\
+\
+        function openFolderModal() \{\
+            editingFolderId = null;\
+            newFolderType = 'english';\
+            document.getElementById('folderModalTitle').textContent = '\uc0\u1053 \u1086 \u1074 \u1072 \u1103  \u1087 \u1072 \u1087 \u1082 \u1072 ';\
+            document.getElementById('folderName').value = '';\
+            document.querySelectorAll('.type-option').forEach(el => \{\
+                el.classList.toggle('selected', el.dataset.type === 'english');\
+            \});\
+            document.getElementById('folderModalOverlay').classList.add('active');\
+            document.getElementById('folderName').focus();\
+        \}\
+\
+        function editFolder(folderId) \{\
+            editingFolderId = folderId;\
+            const folder = data.folders.find(f => f.id === folderId);\
+            newFolderType = folder.type || 'english';\
+            document.getElementById('folderModalTitle').textContent = '\uc0\u1056 \u1077 \u1076 \u1072 \u1082 \u1090 \u1080 \u1088 \u1086 \u1074 \u1072 \u1090 \u1100  \u1087 \u1072 \u1087 \u1082 \u1091 ';\
+            document.getElementById('folderName').value = folder.name;\
+            document.querySelectorAll('.type-option').forEach(el => \{\
+                el.classList.toggle('selected', el.dataset.type === newFolderType);\
+            \});\
+            document.getElementById('folderModalOverlay').classList.add('active');\
+            document.getElementById('folderName').focus();\
+        \}\
+\
+        function closeFolderModal() \{\
+            document.getElementById('folderModalOverlay').classList.remove('active');\
+            document.getElementById('folderForm').reset();\
+            editingFolderId = null;\
+        \}\
+\
+        function saveFolder(event) \{\
+            event.preventDefault();\
+            const name = document.getElementById('folderName').value.trim();\
+            \
+            if (editingFolderId) \{\
+                const folder = data.folders.find(f => f.id === editingFolderId);\
+                folder.name = name;\
+                folder.type = newFolderType;\
+            \} else \{\
+                data.folders.push(\{ \
+                    id: Date.now(), \
+                    name: name, \
+                    type: newFolderType,\
+                    cards: [] \
+                \});\
+            \}\
+            \
+            saveData();\
+            closeFolderModal();\
+            renderFolders();\
+        \}\
+\
+        function deleteFolder(folderId) \{\
+            if (confirm('\uc0\u1059 \u1076 \u1072 \u1083 \u1080 \u1090 \u1100  \u1101 \u1090 \u1091  \u1087 \u1072 \u1087 \u1082 \u1091  \u1080  \u1074 \u1089 \u1077  \u1077 \u1105  \u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1080 ?')) \{\
+                data.folders = data.folders.filter(f => f.id !== folderId);\
+                saveData();\
+                renderFolders();\
+            \}\
+        \}\
+\
+        // ============ CARDS ============\
+        function getCurrentFolder() \{\
+            return data.folders.find(f => f.id === currentFolderId);\
+        \}\
+\
+        function renderCard() \{\
+            const folder = getCurrentFolder();\
+            const front = document.getElementById('cardFront');\
+            const back = document.getElementById('cardBack');\
+\
+            if (!folder || folder.cards.length === 0) \{\
+                if (folder && folder.type === 'notes') \{\
+                    front.innerHTML = `\
+                        <div class="word">\uc0\u1053 \u1077 \u1090  \u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1077 \u1082 </div>\
+                        <div class="sentence">\uc0\u1044 \u1086 \u1073 \u1072 \u1074 \u1100 \u1090 \u1077  \u1085 \u1086 \u1074 \u1091 \u1102  \u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1091 </div>\
+                        <div class="hint">\uc0\u1053 \u1072 \u1078 \u1084 \u1080 \u1090 \u1077  "+ \u1050 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1072 "</div>\
+                    `;\
+                    back.innerHTML = `<div class="hint">\uc0\u1053 \u1072 \u1078 \u1084 \u1080 \u1090 \u1077 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1074 \u1077 \u1088 \u1085 \u1091 \u1090 \u1100 </div>`;\
+                \} else \{\
+                    front.innerHTML = `\
+                        <div class="word">\uc0\u1053 \u1077 \u1090  \u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1077 \u1082 </div>\
+                        <div class="sentence">\uc0\u1044 \u1086 \u1073 \u1072 \u1074 \u1100 \u1090 \u1077  \u1085 \u1086 \u1074 \u1091 \u1102  \u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1091 </div>\
+                        <div class="hint">\uc0\u1053 \u1072 \u1078 \u1084 \u1080 \u1090 \u1077 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1087 \u1077 \u1088 \u1077 \u1074 \u1077 \u1088 \u1085 \u1091 \u1090 \u1100 </div>\
+                    `;\
+                    back.innerHTML = `\
+                        <div class="word">\uc0\u1053 \u1077 \u1090  \u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1077 \u1082 </div>\
+                        <div class="sentence">\uc0\u1053 \u1072 \u1078 \u1084 \u1080 \u1090 \u1077  "+ \u1050 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1072 "</div>\
+                        <div class="hint">\uc0\u1053 \u1072 \u1078 \u1084 \u1080 \u1090 \u1077 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1074 \u1077 \u1088 \u1085 \u1091 \u1090 \u1100 </div>\
+                    `;\
+                \}\
+                document.getElementById('counter').textContent = "0 / 0";\
+                return;\
+            \}\
+\
+            const card = folder.cards[currentCardIndex];\
+\
+            if (folder.type === 'notes') \{\
+                front.innerHTML = `\
+                    <div class="word">$\{escapeHtml(card.term)\}</div>\
+                    <div class="hint">\uc0\u1053 \u1072 \u1078 \u1084 \u1080 \u1090 \u1077 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1091 \u1074 \u1080 \u1076 \u1077 \u1090 \u1100  \u1086 \u1087 \u1088 \u1077 \u1076 \u1077 \u1083 \u1077 \u1085 \u1080 \u1077 </div>\
+                `;\
+                back.innerHTML = `\
+                    <div class="sentence" style="font-style: normal; color: var(--text); font-size: 1.15rem;">$\{escapeHtml(card.definition)\}</div>\
+                    <div class="hint">\uc0\u1053 \u1072 \u1078 \u1084 \u1080 \u1090 \u1077 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1074 \u1077 \u1088 \u1085 \u1091 \u1090 \u1100 </div>\
+                `;\
+            \} else \{\
+                front.innerHTML = `\
+                    <div class="word">$\{escapeHtml(card.enWord)\}</div>\
+                    <div class="sentence">$\{escapeHtml(card.enSentence)\}</div>\
+                    <div class="hint">\uc0\u1053 \u1072 \u1078 \u1084 \u1080 \u1090 \u1077 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1087 \u1077 \u1088 \u1077 \u1074 \u1077 \u1088 \u1085 \u1091 \u1090 \u1100 </div>\
+                `;\
+                back.innerHTML = `\
+                    <div class="word">$\{escapeHtml(card.ruWord)\}</div>\
+                    <div class="sentence">$\{escapeHtml(card.ruSentence)\}</div>\
+                    <div class="hint">\uc0\u1053 \u1072 \u1078 \u1084 \u1080 \u1090 \u1077 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1074 \u1077 \u1088 \u1085 \u1091 \u1090 \u1100 </div>\
+                `;\
+            \}\
+\
+            document.getElementById('counter').textContent = `$\{currentCardIndex + 1\} / $\{folder.cards.length\}`;\
+            document.getElementById('cardContainer').classList.remove('is-flipped');\
+        \}\
+\
+        function flipCard() \{\
+            const folder = getCurrentFolder();\
+            if (folder && folder.cards.length > 0) \{\
+                document.getElementById('cardContainer').classList.toggle('is-flipped');\
+            \}\
+        \}\
+\
+        function nextCard() \{\
+            const folder = getCurrentFolder();\
+            if (!folder || folder.cards.length === 0) return;\
+            currentCardIndex = (currentCardIndex + 1) % folder.cards.length;\
+            renderCard();\
+        \}\
+\
+        function prevCard() \{\
+            const folder = getCurrentFolder();\
+            if (!folder || folder.cards.length === 0) return;\
+            currentCardIndex = (currentCardIndex - 1 + folder.cards.length) % folder.cards.length;\
+            renderCard();\
+        \}\
+\
+        function deleteCurrentCard() \{\
+            const folder = getCurrentFolder();\
+            if (!folder || folder.cards.length === 0) return;\
+            \
+            if (confirm('\uc0\u1059 \u1076 \u1072 \u1083 \u1080 \u1090 \u1100  \u1101 \u1090 \u1091  \u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1091 ?')) \{\
+                folder.cards.splice(currentCardIndex, 1);\
+                saveData();\
+                if (currentCardIndex >= folder.cards.length && currentCardIndex > 0) \{\
+                    currentCardIndex--;\
+                \}\
+                renderCard();\
+            \}\
+        \}\
+\
+        function openCardModal() \{\
+            const folder = getCurrentFolder();\
+            if (!folder) return;\
+\
+            const isNotes = folder.type === 'notes';\
+            document.getElementById('cardModalTitle').textContent = isNotes ? '\uc0\u1053 \u1086 \u1074 \u1072 \u1103  \u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1072  (\u1082 \u1086 \u1085 \u1089 \u1087 \u1077 \u1082 \u1090 )' : '\u1053 \u1086 \u1074 \u1072 \u1103  \u1082 \u1072 \u1088 \u1090 \u1086 \u1095 \u1082 \u1072  (\u1072 \u1085 \u1075 \u1083 \u1080 \u1081 \u1089 \u1082 \u1080 \u1081 )';\
+            document.getElementById('englishFields').style.display = isNotes ? 'none' : 'block';\
+            document.getElementById('notesFields').style.display = isNotes ? 'block' : 'none';\
+\
+            // \uc0\u1057 \u1073 \u1088 \u1086 \u1089  \u1079 \u1085 \u1072 \u1095 \u1077 \u1085 \u1080 \u1081 \
+            document.getElementById('newEnWord').value = '';\
+            document.getElementById('newEnSentence').value = '';\
+            document.getElementById('newRuWord').value = '';\
+            document.getElementById('newRuSentence').value = '';\
+            document.getElementById('newTerm').value = '';\
+            document.getElementById('newDefinition').value = '';\
+\
+            document.getElementById('cardModalOverlay').classList.add('active');\
+            if (isNotes) \{\
+                document.getElementById('newTerm').focus();\
+            \} else \{\
+                document.getElementById('newEnWord').focus();\
+            \}\
+        \}\
+\
+        function closeCardModal() \{\
+            document.getElementById('cardModalOverlay').classList.remove('active');\
+        \}\
+\
+        function saveCard(event) \{\
+            event.preventDefault();\
+            const folder = getCurrentFolder();\
+            if (!folder) return;\
+\
+            if (folder.type === 'notes') \{\
+                const term = document.getElementById('newTerm').value.trim();\
+                const definition = document.getElementById('newDefinition').value.trim();\
+                if (!term || !definition) \{\
+                    alert('\uc0\u1047 \u1072 \u1087 \u1086 \u1083 \u1085 \u1080 \u1090 \u1077  \u1086 \u1073 \u1072  \u1087 \u1086 \u1083 \u1103 ');\
+                    return;\
+                \}\
+                folder.cards.push(\{\
+                    id: Date.now(),\
+                    term: term,\
+                    definition: definition\
+                \});\
+            \} else \{\
+                const enWord = document.getElementById('newEnWord').value.trim();\
+                const enSentence = document.getElementById('newEnSentence').value.trim();\
+                const ruWord = document.getElementById('newRuWord').value.trim();\
+                const ruSentence = document.getElementById('newRuSentence').value.trim();\
+                if (!enWord || !enSentence || !ruWord || !ruSentence) \{\
+                    alert('\uc0\u1047 \u1072 \u1087 \u1086 \u1083 \u1085 \u1080 \u1090 \u1077  \u1074 \u1089 \u1077  \u1087 \u1086 \u1083 \u1103 ');\
+                    return;\
+                \}\
+                folder.cards.push(\{\
+                    id: Date.now(),\
+                    enWord: enWord,\
+                    enSentence: enSentence,\
+                    ruWord: ruWord,\
+                    ruSentence: ruSentence\
+                \});\
+            \}\
+\
+            saveData();\
+            closeCardModal();\
+            currentCardIndex = folder.cards.length - 1;\
+            renderCard();\
+        \}\
+\
+        // ============ SCANNER ============\
+        function openScanner() \{\
+            document.getElementById('foldersScreen').classList.remove('active');\
+            document.getElementById('scannerScreen').classList.add('active');\
+            populateTargetFolderSelect();\
+            resetScanner();\
+        \}\
+\
+        function populateTargetFolderSelect() \{\
+            const select = document.getElementById('targetFolder');\
+            const notesFolders = data.folders.filter(f => f.type === 'notes');\
+            \
+            if (notesFolders.length === 0) \{\
+                select.innerHTML = '<option value="">-- \uc0\u1057 \u1085 \u1072 \u1095 \u1072 \u1083 \u1072  \u1089 \u1086 \u1079 \u1076 \u1072 \u1081 \u1090 \u1077  \u1087 \u1072 \u1087 \u1082 \u1091  \u1090 \u1080 \u1087 \u1072  "\u1050 \u1086 \u1085 \u1089 \u1087 \u1077 \u1082 \u1090 \u1099 " --</option>';\
+                select.disabled = true;\
+                document.getElementById('scanBtn').disabled = true;\
+                return;\
+            \}\
+            select.innerHTML = notesFolders.map(f => \
+                `<option value="$\{f.id\}">$\{f.name\}</option>`\
+            ).join('');\
+            select.disabled = false;\
+            updateScanButtonState();\
+        \}\
+\
+        function resetScanner() \{\
+            scannedImage = null;\
+            scannedPairs = [];\
+            document.getElementById('photoPreviewContainer').style.display = 'none';\
+            document.getElementById('resultsSection').style.display = 'none';\
+            document.getElementById('progressContainer').style.display = 'none';\
+            document.getElementById('fileInputLabel').textContent = '\uc0\u55357 \u56567  \u1042 \u1099 \u1073 \u1088 \u1072 \u1090 \u1100  \u1092 \u1086 \u1090 \u1086  \u1080 \u1083 \u1080  \u1089 \u1076 \u1077 \u1083 \u1072 \u1090 \u1100  \u1089 \u1085 \u1080 \u1084 \u1086 \u1082 ';\
+            document.getElementById('photoInput').value = '';\
+            updateScanButtonState();\
+        \}\
+\
+        function updateScanButtonState() \{\
+            const hasImage = scannedImage !== null;\
+            const hasFolder = document.getElementById('targetFolder').value !== '';\
+            document.getElementById('scanBtn').disabled = !(hasImage && hasFolder);\
+        \}\
+\
+        function handlePhotoSelect(event) \{\
+            const file = event.target.files[0];\
+            if (!file) return;\
+\
+            const reader = new FileReader();\
+            reader.onload = function(e) \{\
+                const img = new Image();\
+                img.onload = function() \{\
+                    scannedImage = img;\
+                    const preview = document.getElementById('photoPreview');\
+                    preview.src = e.target.result;\
+                    document.getElementById('photoPreviewContainer').style.display = 'block';\
+                    document.getElementById('fileInputLabel').textContent = '\uc0\u9989  \u1060 \u1086 \u1090 \u1086  \u1079 \u1072 \u1075 \u1088 \u1091 \u1078 \u1077 \u1085 \u1086  (\u1085 \u1072 \u1078 \u1084 \u1080 \u1090 \u1077 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1079 \u1072 \u1084 \u1077 \u1085 \u1080 \u1090 \u1100 )';\
+                    document.getElementById('resultsSection').style.display = 'none';\
+                    updateScanButtonState();\
+                \};\
+                img.src = e.target.result;\
+            \};\
+            reader.readAsDataURL(file);\
+        \}\
+\
+        function rgbToHsv(r, g, b) \{\
+            r /= 255; g /= 255; b /= 255;\
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);\
+            const d = max - min;\
+            let h, s = max === 0 ? 0 : d / max, v = max;\
+\
+            if (max === min) \{\
+                h = 0;\
+            \} else \{\
+                switch (max) \{\
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;\
+                    case g: h = (b - r) / d + 2; break;\
+                    case b: h = (r - g) / d + 4; break;\
+                \}\
+                h /= 6;\
+            \}\
+            return \{ h: h * 360, s: s * 100, v: v * 100 \};\
+        \}\
+\
+        function hexToHsv(hex) \{\
+            const r = parseInt(hex.slice(1, 3), 16);\
+            const g = parseInt(hex.slice(3, 5), 16);\
+            const b = parseInt(hex.slice(5, 7), 16);\
+            return rgbToHsv(r, g, b);\
+        \}\
+\
+        function hsvDistance(hsv1, hsv2) \{\
+            let dh = Math.abs(hsv1.h - hsv2.h);\
+            if (dh > 180) dh = 360 - dh;\
+            const ds = Math.abs(hsv1.s - hsv2.s);\
+            const dv = Math.abs(hsv1.v - hsv2.v);\
+            return dh + ds * 0.5 + dv * 0.3;\
+        \}\
+\
+        async function startScan() \{\
+            if (!scannedImage) return;\
+\
+            const termColorHex = document.getElementById('termColor').value;\
+            const defColorHex = document.getElementById('defColor').value;\
+            const tolerance = parseInt(document.getElementById('tolerance').value);\
+\
+            const termHsv = hexToHsv(termColorHex);\
+            const defHsv = hexToHsv(defColorHex);\
+\
+            const progressContainer = document.getElementById('progressContainer');\
+            const progressFill = document.getElementById('progressFill');\
+            const progressText = document.getElementById('progressText');\
+            progressContainer.style.display = 'block';\
+            document.getElementById('scanBtn').disabled = true;\
+            document.getElementById('resultsSection').style.display = 'none';\
+\
+            try \{\
+                progressText.textContent = '\uc0\u1055 \u1086 \u1076 \u1075 \u1086 \u1090 \u1086 \u1074 \u1082 \u1072  \u1080 \u1079 \u1086 \u1073 \u1088 \u1072 \u1078 \u1077 \u1085 \u1080 \u1103 ...';\
+                progressFill.style.width = '5%';\
+\
+                const canvas = document.createElement('canvas');\
+                const MAX_DIM = 1500;\
+                let w = scannedImage.width, h = scannedImage.height;\
+                if (w > MAX_DIM || h > MAX_DIM) \{\
+                    const scale = MAX_DIM / Math.max(w, h);\
+                    w = Math.round(w * scale);\
+                    h = Math.round(h * scale);\
+                \}\
+                canvas.width = w;\
+                canvas.height = h;\
+                const ctx = canvas.getContext('2d');\
+                ctx.drawImage(scannedImage, 0, 0, w, h);\
+                const imageData = ctx.getImageData(0, 0, w, h);\
+                const pixels = imageData.data;\
+\
+                progressText.textContent = '\uc0\u1040 \u1085 \u1072 \u1083 \u1080 \u1079  \u1094 \u1074 \u1077 \u1090 \u1086 \u1074 ...';\
+                progressFill.style.width = '15%';\
+                await sleep(50);\
+\
+                const termMask = new Uint8Array(w * h);\
+                const defMask = new Uint8Array(w * h);\
+\
+                for (let i = 0; i < pixels.length; i += 4) \{\
+                    const r = pixels[i], g = pixels[i+1], b = pixels[i+2];\
+                    const hsv = rgbToHsv(r, g, b);\
+\
+                    const termDist = hsvDistance(hsv, termHsv);\
+                    if (termDist < tolerance && hsv.s > 25 && hsv.v > 30) \{\
+                        termMask[i / 4] = 1;\
+                    \}\
+\
+                    const defDist = hsvDistance(hsv, defHsv);\
+                    if (defDist < tolerance && hsv.s > 25 && hsv.v > 30) \{\
+                        defMask[i / 4] = 1;\
+                    \}\
+                \}\
+\
+                progressText.textContent = '\uc0\u1047 \u1072 \u1075 \u1088 \u1091 \u1079 \u1082 \u1072  OCR-\u1076 \u1074 \u1080 \u1078 \u1082 \u1072 ...';\
+                progressFill.style.width = '25%';\
+\
+                const worker = await Tesseract.createWorker('rus', 1, \{\
+                    logger: m => \{\
+                        if (m.status === 'recognizing text') \{\
+                            const pct = 25 + Math.round(m.progress * 70);\
+                            progressFill.style.width = pct + '%';\
+                            progressText.textContent = `\uc0\u1056 \u1072 \u1089 \u1087 \u1086 \u1079 \u1085 \u1072 \u1074 \u1072 \u1085 \u1080 \u1077  \u1090 \u1077 \u1082 \u1089 \u1090 \u1072 ... $\{Math.round(m.progress * 100)\}%`;\
+                        \} else if (m.status === 'loading language traineddata') \{\
+                            progressText.textContent = `\uc0\u1047 \u1072 \u1075 \u1088 \u1091 \u1079 \u1082 \u1072  \u1088 \u1091 \u1089 \u1089 \u1082 \u1086 \u1075 \u1086  \u1103 \u1079 \u1099 \u1082 \u1072 ... $\{Math.round(m.progress * 100)\}%`;\
+                        \}\
+                    \}\
+                \});\
+\
+                const \{ data: ocrResult \} = await worker.recognize(canvas);\
+                await worker.terminate();\
+\
+                progressText.textContent = '\uc0\u1057 \u1086 \u1087 \u1086 \u1089 \u1090 \u1072 \u1074 \u1083 \u1077 \u1085 \u1080 \u1077  \u1090 \u1077 \u1082 \u1089 \u1090 \u1072  \u1089  \u1094 \u1074 \u1077 \u1090 \u1072 \u1084 \u1080 ...';\
+                progressFill.style.width = '95%';\
+                await sleep(50);\
+\
+                const termWords = [];\
+                const defWords = [];\
+\
+                for (const word of ocrResult.words) \{\
+                    if (!word.text || word.text.trim().length === 0) continue;\
+                    if (word.confidence < 30) continue;\
+\
+                    let termHits = 0, defHits = 0, total = 0;\
+                    for (let y = word.bbox.y0; y < word.bbox.y1; y += 2) \{\
+                        for (let x = word.bbox.x0; x < word.bbox.x1; x += 2) \{\
+                            if (x < 0 || y < 0 || x >= w || y >= h) continue;\
+                            total++;\
+                            const idx = y * w + x;\
+                            if (termMask[idx]) termHits++;\
+                            if (defMask[idx]) defHits++;\
+                        \}\
+                    \}\
+\
+                    if (total === 0) continue;\
+                    const termRatio = termHits / total;\
+                    const defRatio = defHits / total;\
+\
+                    if (termRatio > 0.15 && termRatio > defRatio) \{\
+                        termWords.push(\{ text: word.text.trim(), bbox: word.bbox \});\
+                    \} else if (defRatio > 0.15 && defRatio > termRatio) \{\
+                        defWords.push(\{ text: word.text.trim(), bbox: word.bbox \});\
+                    \}\
+                \}\
+\
+                const termLines = groupIntoLines(termWords);\
+                const defLines = groupIntoLines(defWords);\
+\
+                scannedPairs = pairLines(termLines, defLines);\
+\
+                drawOverlay(termLines, defLines, w, h);\
+\
+                progressFill.style.width = '100%';\
+                progressText.textContent = `\uc0\u1043 \u1086 \u1090 \u1086 \u1074 \u1086 ! \u1053 \u1072 \u1081 \u1076 \u1077 \u1085 \u1086  \u1087 \u1072 \u1088 : $\{scannedPairs.length\}`;\
+\
+                await sleep(500);\
+                progressContainer.style.display = 'none';\
+\
+                renderPairs();\
+\
+            \} catch (err) \{\
+                console.error(err);\
+                progressText.textContent = '\uc0\u10060  \u1054 \u1096 \u1080 \u1073 \u1082 \u1072 : ' + err.message;\
+                document.getElementById('scanBtn').disabled = false;\
+            \}\
+        \}\
+\
+        function sleep(ms) \{\
+            return new Promise(resolve => setTimeout(resolve, ms));\
+        \}\
+\
+        function groupIntoLines(words) \{\
+            if (words.length === 0) return [];\
+            \
+            const sorted = [...words].sort((a, b) => a.bbox.y0 - b.bbox.y0);\
+            const lines = [];\
+            let currentLine = [sorted[0]];\
+\
+            for (let i = 1; i < sorted.length; i++) \{\
+                const prev = currentLine[0];\
+                const curr = sorted[i];\
+                const lineHeight = (prev.bbox.y1 - prev.bbox.y0);\
+                if (Math.abs(curr.bbox.y0 - prev.bbox.y0) < lineHeight * 0.8) \{\
+                    currentLine.push(curr);\
+                \} else \{\
+                    lines.push(currentLine);\
+                    currentLine = [curr];\
+                \}\
+            \}\
+            lines.push(currentLine);\
+\
+            return lines.map(line => \{\
+                line.sort((a, b) => a.bbox.x0 - b.bbox.x0);\
+                const text = line.map(w => w.text).join(' ');\
+                const bbox = \{\
+                    x0: Math.min(...line.map(w => w.bbox.x0)),\
+                    y0: Math.min(...line.map(w => w.bbox.y0)),\
+                    x1: Math.max(...line.map(w => w.bbox.x1)),\
+                    y1: Math.max(...line.map(w => w.bbox.y1))\
+                \};\
+                return \{ text, bbox \};\
+            \});\
+        \}\
+\
+        function pairLines(termLines, defLines) \{\
+            const pairs = [];\
+            const usedDefs = new Set();\
+\
+            const sortedTerms = [...termLines].sort((a, b) => a.bbox.y0 - b.bbox.y0 || a.bbox.x0 - b.bbox.x0);\
+\
+            for (const term of sortedTerms) \{\
+                const termCx = (term.bbox.x0 + term.bbox.x1) / 2;\
+                const termCy = (term.bbox.y0 + term.bbox.y1) / 2;\
+\
+                let bestDef = null;\
+                let bestScore = Infinity;\
+\
+                for (let i = 0; i < defLines.length; i++) \{\
+                    if (usedDefs.has(i)) continue;\
+                    const def = defLines[i];\
+                    const defCx = (def.bbox.x0 + def.bbox.x1) / 2;\
+                    const defCy = (def.bbox.y0 + def.bbox.y1) / 2;\
+\
+                    const dx = defCx - termCx;\
+                    const dy = defCy - termCy;\
+                    const dist = Math.sqrt(dx * dx + dy * dy);\
+\
+                    let score = dist;\
+                    if (dx < -100) score += 500;\
+\
+                    if (score < bestScore) \{\
+                        bestScore = score;\
+                        bestDef = \{ def, index: i \};\
+                    \}\
+                \}\
+\
+                if (bestDef) \{\
+                    pairs.push(\{\
+                        term: term.text,\
+                        definition: bestDef.def.text\
+                    \});\
+                    usedDefs.add(bestDef.index);\
+                \} else \{\
+                    pairs.push(\{ term: term.text, definition: '' \});\
+                \}\
+            \}\
+\
+            for (let i = 0; i < defLines.length; i++) \{\
+                if (!usedDefs.has(i)) \{\
+                    pairs.push(\{ term: '', definition: defLines[i].text \});\
+                \}\
+            \}\
+\
+            return pairs;\
+        \}\
+\
+        function drawOverlay(termLines, defLines, imgW, imgH) \{\
+            const canvas = document.getElementById('overlayCanvas');\
+            const preview = document.getElementById('photoPreview');\
+\
+            const displayW = preview.clientWidth;\
+            const displayH = preview.clientHeight;\
+            canvas.width = displayW;\
+            canvas.height = displayH;\
+\
+            const scaleX = displayW / imgW;\
+            const scaleY = displayH / imgH;\
+\
+            const ctx = canvas.getContext('2d');\
+            ctx.clearRect(0, 0, displayW, displayH);\
+\
+            ctx.strokeStyle = '#ffff00';\
+            ctx.lineWidth = 2;\
+            for (const line of termLines) \{\
+                ctx.strokeRect(\
+                    line.bbox.x0 * scaleX,\
+                    line.bbox.y0 * scaleY,\
+                    (line.bbox.x1 - line.bbox.x0) * scaleX,\
+                    (line.bbox.y1 - line.bbox.y0) * scaleY\
+                );\
+            \}\
+\
+            ctx.strokeStyle = '#ff69b4';\
+            for (const line of defLines) \{\
+                ctx.strokeRect(\
+                    line.bbox.x0 * scaleX,\
+                    line.bbox.y0 * scaleY,\
+                    (line.bbox.x1 - line.bbox.x0) * scaleX,\
+                    (line.bbox.y1 - line.bbox.y0) * scaleY\
+                );\
+            \}\
+        \}\
+\
+        function renderPairs() \{\
+            const list = document.getElementById('pairsList');\
+            document.getElementById('pairsCount').textContent = scannedPairs.length;\
+\
+            if (scannedPairs.length === 0) \{\
+                list.innerHTML = `\
+                    <div class="empty-state" style="padding: 30px;">\
+                        <div class="empty-state-icon">\uc0\u55357 \u56589 </div>\
+                        <p>\uc0\u1053 \u1080 \u1095 \u1077 \u1075 \u1086  \u1085 \u1077  \u1085 \u1072 \u1081 \u1076 \u1077 \u1085 \u1086 </p>\
+                        <p style="margin-top: 10px; font-size: 0.85rem;">\uc0\u1055 \u1086 \u1087 \u1088 \u1086 \u1073 \u1091 \u1081 \u1090 \u1077  \u1080 \u1079 \u1084 \u1077 \u1085 \u1080 \u1090 \u1100  \u1094 \u1074 \u1077 \u1090 \u1072  \u1080 \u1083 \u1080  \u1095 \u1091 \u1074 \u1089 \u1090 \u1074 \u1080 \u1090 \u1077 \u1083 \u1100 \u1085 \u1086 \u1089 \u1090 \u1100 </p>\
+                    </div>\
+                `;\
+                document.getElementById('resultsSection').style.display = 'block';\
+                return;\
+            \}\
+\
+            list.innerHTML = scannedPairs.map((pair, idx) => `\
+                <div class="pair-item" data-pair-idx="$\{idx\}">\
+                    <div class="pair-label">\uc0\u55357 \u57313  \u1058 \u1077 \u1088 \u1084 \u1080 \u1085  (\u1083 \u1080 \u1094 \u1086 )</div>\
+                    <input type="text" value="$\{escapeHtml(pair.term)\}" onchange="scannedPairs[$\{idx\}].term = this.value">\
+                    <div class="pair-label">\uc0\u55357 \u56628  \u1054 \u1087 \u1088 \u1077 \u1076 \u1077 \u1083 \u1077 \u1085 \u1080 \u1077  (\u1086 \u1073 \u1086 \u1088 \u1086 \u1090 )</div>\
+                    <input type="text" value="$\{escapeHtml(pair.definition)\}" onchange="scannedPairs[$\{idx\}].definition = this.value">\
+                    <div class="pair-actions">\
+                        <button class="btn btn-danger btn-small btn-delete-pair" type="button">\uc0\u55357 \u56785 \u65039  \u1059 \u1076 \u1072 \u1083 \u1080 \u1090 \u1100 </button>\
+                    </div>\
+                </div>\
+            `).join('');\
+\
+            document.getElementById('resultsSection').style.display = 'block';\
+        \}\
+\
+        function escapeHtml(str) \{\
+            return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\
+        \}\
+\
+        function removePair(idx) \{\
+            scannedPairs.splice(idx, 1);\
+            renderPairs();\
+        \}\
+\
+        function addEmptyPair() \{\
+            scannedPairs.push(\{ term: '', definition: '' \});\
+            renderPairs();\
+            setTimeout(() => \{\
+                const inputs = document.querySelectorAll('#pairsList input');\
+                if (inputs.length > 0) inputs[inputs.length - 2].focus();\
+            \}, 50);\
+        \}\
+\
+        function saveScannedPairs() \{\
+            const folderId = parseInt(document.getElementById('targetFolder').value);\
+            const folder = data.folders.find(f => f.id === folderId);\
+            if (!folder) \{\
+                alert('\uc0\u1055 \u1072 \u1087 \u1082 \u1072  \u1085 \u1077  \u1085 \u1072 \u1081 \u1076 \u1077 \u1085 \u1072 ');\
+                return;\
+            \}\
+\
+            const validPairs = scannedPairs.filter(p => p.term.trim().length > 0);\
+\
+            if (validPairs.length === 0) \{\
+                alert('\uc0\u1053 \u1077 \u1090  \u1087 \u1072 \u1088  \u1076 \u1083 \u1103  \u1089 \u1086 \u1093 \u1088 \u1072 \u1085 \u1077 \u1085 \u1080 \u1103 . \u1047 \u1072 \u1087 \u1086 \u1083 \u1085 \u1080 \u1090 \u1077  \u1093 \u1086 \u1090 \u1103  \u1073 \u1099  \u1090 \u1077 \u1088 \u1084 \u1080 \u1085 .');\
+                return;\
+            \}\
+\
+            for (const pair of validPairs) \{\
+                folder.cards.push(\{\
+                    id: Date.now() + Math.random() * 1000,\
+                    term: pair.term.trim(),\
+                    definition: pair.definition.trim()\
+                \});\
+            \}\
+\
+            saveData();\
+            alert(`\uc0\u9989  \u1057 \u1086 \u1093 \u1088 \u1072 \u1085 \u1077 \u1085 \u1086  $\{validPairs.length\} $\{getCardWord(validPairs.length)\} \u1074  \u1087 \u1072 \u1087 \u1082 \u1091  "$\{folder.name\}"`);\
+            \
+            backToFoldersFromScanner();\
+        \}\
+\
+        // ============ MODALS ============\
+        document.getElementById('folderModalOverlay').addEventListener('click', function(e) \{\
+            if (e.target === this) closeFolderModal();\
+        \});\
+\
+        document.getElementById('cardModalOverlay').addEventListener('click', function(e) \{\
+            if (e.target === this) closeCardModal();\
+        \});\
+\
+        document.getElementById('targetFolder').addEventListener('change', updateScanButtonState);\
+\
+        // ============ INIT ============\
+        if ('serviceWorker' in navigator) \{\
+            navigator.serviceWorker.register('sw.js').catch(() => \{\});\
+        \}\
+\
+        init();\
+    </script>\
+</body>\
+</html>\
+}
